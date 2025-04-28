@@ -72,8 +72,9 @@ jobs:
         run: npm test
         
       - name: Verify app startup
+        # ИСПРАВЛЕНИЕ: Модифицирована команда для немедленного выхода после require()
         run: |
-          node -e "const app = require('./app.js'); console.log('App loaded successfully')"
+          node -e "try { require('./app.js'); console.log('App module loaded successfully'); process.exit(0); } catch (e) { console.error('Failed to load app module:', e); process.exit(1); }"
           
       - name: Initialize code coverage
         run: |
@@ -81,7 +82,6 @@ jobs:
           echo "Покрытие кода: условный показатель 85%" > coverage.txt
           
       - name: Upload coverage report
-        # ИСПРАВЛЕНИЕ: Обновлена версия actions/upload-artifact с v3 на v4
         uses: actions/upload-artifact@v4 
         with:
           name: code-coverage-report
@@ -162,7 +162,7 @@ jobs:
         run: |
           echo "📊 Сводка развертывания:"
           echo "🔹 Приложение: Node.js Express CI/CD Demo"
-          🔹 Версия: ${{ github.ref == 'refs/heads/main' && 'latest' || github.ref }}"
+          echo "🔹 Версия: ${{ github.ref == 'refs/heads/main' && 'latest' || github.ref }}"
           echo "🔹 Среда: ${{ github.event.inputs.environment || 'staging' }}"
           echo "🔹 Образ: ${{ secrets.DOCKER_USERNAME }}/node-express-app:latest"
           echo "🔹 Время: $(date +'%Y-%m-%d %H:%M:%S')"
