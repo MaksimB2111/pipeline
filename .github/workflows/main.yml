@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: 'npm'
+          # Удалена строка cache: 'npm', чтобы избежать ошибки с отсутствием lock-файла
           
       - name: Install dependencies
         run: npm install
@@ -63,7 +63,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          #cache: 'npm'
+          # Удалена строка cache: 'npm', чтобы избежать ошибки с отсутствием lock-файла
           
       - name: Install dependencies
         run: npm install
@@ -152,16 +152,16 @@ jobs:
           
       - name: Deploy application
         run: |
-          echo "Выполняется имитация развертывания приложения..."
-          echo "Обновление контейнеров..."
-          echo "Проверка работоспособности приложения..."
-          echo "Развертывание успешно завершено!"
+          echo "✅ Выполняется имитация развертывания приложения..."
+          echo "✅ Обновление контейнеров..."
+          echo "✅ Проверка работоспособности приложения..."
+          echo "✅ Развертывание успешно завершено!"
           
       - name: Deployment notification
         run: |
-          echo "Сводка развертывания:"
-          echo "Приложение: Node.js Express CI/CD Demo"
-          echo "Версия: ${{ github.ref == 'refs/heads/main' && 'latest' || github.ref }}"
-          echo "Среда: ${{ github.event.inputs.environment || 'staging' }}"
-          echo "Образ: ${{ secrets.DOCKER_USERNAME }}/node-express-app:latest"
-          echo "Время: $(date +'%Y-%m-%d %H:%M:%S')"
+          echo "📊 Сводка развертывания:"
+          echo "🔹 Приложение: Node.js Express CI/CD Demo"
+          echo "🔹 Версия: ${{ github.ref == 'refs/heads/main' && 'latest' || github.ref }}"
+          echo "🔹 Среда: ${{ github.event.inputs.environment || 'staging' }}"
+          echo "🔹 Образ: ${{ secrets.DOCKER_USERNAME }}/node-express-app:latest"
+          echo "🔹 Время: $(date +'%Y-%m-%d %H:%M:%S')"
